@@ -37,4 +37,13 @@ public class JpaItemRepository implements ItemRepository{
         TypedQuery<Item> query = em.createQuery(jpql, Item.class);
         return query.getResultList();
     }
+
+    @Override
+    public void update(Long id, Item updateItem) {
+        Item findItem = em.find(Item.class, id);
+        findItem.setItemName(updateItem.getItemName());
+        findItem.setPrice(updateItem.getPrice());
+        findItem.setSeller(updateItem.getSeller());
+        findItem.setContent(updateItem.getContent());
+    }
 }
