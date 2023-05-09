@@ -18,29 +18,26 @@
                     type="button">상품 등록</button>
         </div>
     </div>
-    <hr class="my-4">
-    <div>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>상품명</th>
-                <th>가격</th>
-                <th>판매자</th>
-                <th>상품설명</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="item : ${items}">
-                <td><a href="item.html" th:href="@{/item/items/{itemId} (itemId=${item.id})}" th:text="${item.id}">상품id</a></td>
-                <td><a href="item.html" th:href="@{|/item/items/${item.id}|}" th:text="${item.itemName}">상품명</a></td>
-                <td th:text="${item.price}">10000</td>
-                <td th:text="${item.seller}">판매자명</td>
-                <td th:text="${item.content}">상품설명</td>
-            </tr>
-            </tbody>
-        </table>
+</div>
+<hr class="my-4">
+<div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
+        <div class="col mb-5" th:each="item : ${items}">
+            <div class="card h-100">
+                <img class="card-img-top" th:src="@{|/item/items/images/${item.getThumbnailUUID()}|}">
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <h5 class="fw-bolder" th:text="${item.getItemName()}">상품명</h5>
+                        <p th:text="|${item.getPrice()} 원|">가격</p>
+                    </div>
+                </div>
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                                th:href="@{|/item/items/${item.id}|}">상세보기</a></div>
+                </div>
+            </div>
+        </div>
     </div>
-</div> <!-- /container -->
+</div>
 </body>
 </html>

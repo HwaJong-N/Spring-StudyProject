@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
@@ -45,5 +46,15 @@ public class JpaItemRepository implements ItemRepository{
         findItem.setPrice(updateItem.getPrice());
         findItem.setSeller(updateItem.getSeller());
         findItem.setContent(updateItem.getContent());
+        findItem.setThumbnailName(updateItem.getThumbnailName());
+        findItem.setThumbnailUUID(updateItem.getThumbnailUUID());
     }
+
+    @Override
+    public void delete(Long id) {
+        String jpql = "delete from Item i where i.id=:id";
+        Query query = em.createQuery(jpql).setParameter("id", id);
+        query.executeUpdate();
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.ghkwhd.shop.repository.item;
 
-import com.ghkwhd.shop.controller.itemDTO.ItemUpdateDTO;
 import com.ghkwhd.shop.domain.item.Item;
 
 import java.util.List;
@@ -11,4 +10,5 @@ public interface ItemRepository {
     Optional<Item> findById(Long id);
     List<Item> findAll();
     void update(Long id, Item updateItem);
+    void delete(Long id);
 }
