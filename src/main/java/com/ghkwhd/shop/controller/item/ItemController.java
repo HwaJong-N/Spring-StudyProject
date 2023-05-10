@@ -30,7 +30,7 @@ public class ItemController {
 
     // 상품 목록 조회
     @GetMapping
-    public String items(Model model) {
+    public String loadItems(Model model) {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
         return "item/items";
@@ -38,7 +38,7 @@ public class ItemController {
 
     // 상품 상세 조회
     @GetMapping("/{itemId}")
-    public String item(@PathVariable Long itemId, Model model) {
+    public String loadItem(@PathVariable Long itemId, Model model) {
         itemRepository.findById(itemId).ifPresent(
                 item -> model.addAttribute("item", item)
         );
@@ -57,18 +57,10 @@ public class ItemController {
     public String addItem(@ModelAttribute("item") ItemSaveDTO dto,
                           RedirectAttributes redirectAttributes) throws IOException {
 
-        // 요청 메세지에서 MultipartFile 추출
-        MultipartFile multipartFile = dto.getThumbnailName();
-
-        Item item = new Item();
-        item.setItemName(dto.getItemName());
-        item.setPrice(dto.getPrice());
-        item.setSeller(dto.getSeller());
-        item.setContent(dto.getContent());
-        item.setThumbnailName(multipartFile.getOriginalFilename());
-        item.setThumbnailUUID(checkEmpty(multipartFile));
-
+        // ItemSaveDTO 에 있는 데이터들로 새로운 Item 객체를 반환받는다
+        Item item = saveItem(dto);
         Item savedItem = itemRepository.save(item);
+
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("saveStatus", true);
 
@@ -90,21 +82,27 @@ public class ItemController {
     @PostMapping("/{itemId}/edit")
     public String editItem(@PathVariable Long itemId,
                            @ModelAttribute("item") ItemUpdateDTO dto,
-                           RedirectAttributes redirectAttributes) throws IOException {
+                           RedirectAttributes redirectAttributes) {
 
-        Item updateItem = new Item();
-        updateItem.setItemName(dto.getItemName());
-        updateItem.setPrice(dto.getPrice());
-        updateItem.setSeller(dto.getSeller());
-        updateItem.setContent(dto.getContent());
-        updateItem.setThumbnailName(dto.getThumbnailName());
-        updateItem.setThumbnailUUID(dto.getThumbnailUUID());
+        // ItemUpdateDTO 에 있는 데이터들을 매개변수로 전달하고 이를 가진 Item 객체를 받는다
+        Item updateItem = updateItem(dto.getItemName(), dto.getPrice(), dto.getSeller(),
+                dto.getContent(), dto.getThumbnailName(), dto.getThumbnailUUID());
 
         itemRepository.update(itemId, updateItem);
 
         redirectAttributes.addAttribute("updateStatus", true);
 
         return "redirect:/item/items/{itemId}";
+    }
+
+
+    // 상품 삭제하기
+    @GetMapping("/{itemId}/delete")
+    public String deleteItem(@PathVariable Long itemId) {
+        Item item = itemRepository.findById(itemId).orElse(null);
+        deleteImg(item.getThumbnailUUID());
+        itemRepository.delete(itemId);
+        return "redirect:/item/items";
     }
 
 
@@ -115,13 +113,9 @@ public class ItemController {
         Item findItem = itemRepository.findById(itemId).orElse(null);
         deleteImg(findItem.getThumbnailUUID());
 
-        Item updateItem = new Item();
-        updateItem.setItemName(findItem.getItemName());
-        updateItem.setPrice(findItem.getPrice());
-        updateItem.setSeller(findItem.getSeller());
-        updateItem.setContent(findItem.getContent());
-        updateItem.setThumbnailName("");
-        updateItem.setThumbnailUUID("defaultImage.jpg");
+        // ItemUpdateDTO 에 있는 데이터들을 매개변수로 전달하고 이를 가진 Item 객체를 받는다
+        Item updateItem = updateItem(findItem.getItemName(), findItem.getPrice(), findItem.getSeller(),
+                findItem.getContent(), "", "defaultImage.jpg");
 
         itemRepository.update(itemId, updateItem);
 
@@ -146,10 +140,32 @@ public class ItemController {
                                 RedirectAttributes redirectAttributes) throws IOException {
 
         Item findItem = itemRepository.findById(itemId).orElse(null);
-        deleteImg(findItem.getThumbnailUUID());
+        deleteImg(findItem.getThumbnailUUID());  // 기존 썸네일 프로젝트에서 제거
 
         // 기존 상품 삭제
         itemRepository.delete(itemId);
+
+        // ItemSaveDTO 에 있는 데이터들로 새로운 Item 객체를 반환받는다
+        Item item = saveItem(dto);
+        Item savedItem = itemRepository.save(item);
+
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("editThumbnailStatus", true);
+
+        return "redirect:/item/items/{itemId}";
+    }
+
+
+    // 이미지 출력하기
+    @ResponseBody
+    @GetMapping("/images/{filename}")
+    public Resource displayImage(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + getFullPath(filename));
+    }
+
+
+    // ItemSaveDTO 의 데이터를 이용해 Item 객체 생성 및 반환
+    private Item saveItem(ItemSaveDTO dto) throws IOException {
 
         // 요청 메세지에서 MultipartFile 추출
         MultipartFile multipartFile = dto.getThumbnailName();
@@ -162,24 +178,23 @@ public class ItemController {
         item.setThumbnailName(multipartFile.getOriginalFilename());
         item.setThumbnailUUID(checkEmpty(multipartFile));
 
-        Item savedItem = itemRepository.save(item);
-        redirectAttributes.addAttribute("itemId", savedItem.getId());
-        redirectAttributes.addAttribute("editThumbnailStatus", true);
-
-        return "redirect:/item/items/{itemId}";
+        return item;
     }
 
 
-    // 상품 삭제하기
-    @GetMapping("/{itemId}/delete")
-    public String deleteItem(@PathVariable Long itemId) {
-        Item item = itemRepository.findById(itemId).orElse(null);
-        deleteImg(item.getThumbnailUUID());
-        itemRepository.delete(itemId);
-        return "redirect:/item/items";
+    // 전달받은 String 을 이용해 Item 객체 생성 및 반환
+    private Item updateItem(String name, int price, String seller, String content, String thName, String thUUID) {
+
+        Item item = new Item();
+        item.setItemName(name);
+        item.setPrice(price);
+        item.setSeller(seller);
+        item.setContent(content);
+        item.setThumbnailName(thName);
+        item.setThumbnailUUID(thUUID);
+
+        return item;
     }
-
-
 
 
 
@@ -216,14 +231,6 @@ public class ItemController {
         String storeFileName = createStoreName(originalFilename);
         multipartFile.transferTo(new File(getFullPath(storeFileName)));  // 파일 저장
         return storeFileName;
-    }
-
-
-    // 이미지 출력하기
-    @ResponseBody
-    @GetMapping("/images/{filename}")
-    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
-        return new UrlResource("file:" + getFullPath(filename));
     }
 
 
