@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div class="card m-3" th:fragment="addReviewForm(itemId)">
+  <div class="card-body">
+    <!-- 리뷰 작성 폼-->
+    <form>
+
+      <!-- 상품 id 전달을 위한 히든 인풋 -->
+      <input type="hidden" id="itemId" th:value="${itemId}">
+
+      <!-- 닉네임 입력 -->
+      <div class="mb-3">
+        <label class="form-label">닉네임</label>
+        <input type="text" class="form-control form-control-sm" id="nickname">
+      </div>
+
+      <!-- 별점 입력 -->
+      <div class="mb-3">
+        <label class="form-label">별점</label>
+        <select class="form-select form-select-sm" id="star">
+          <option selected>==별점선택==</option>
+          <option value="1">★</option>
+          <option value="2">★★</option>
+          <option value="3">★★★</option>
+          <option value="4">★★★★</option>
+          <option value="5">★★★★★</option>
+        </select>
+      </div>
+
+      <!-- 리뷰 내용 입력 -->
+      <div class="mb-3">
+        <label class="form-label">내용</label>
+        <textarea type="text" class="form-control form-control-sm" rows="3"
+                  id="comment"></textarea>
+      </div>
+
+      <!-- 전송 버튼 -->
+      <button type="button" class="btn btn-outline-primary btn-sm float-md-end" id="reviewCreate">리뷰등록</button>
+    </form>
+  </div>
+</div>
+
+</html>

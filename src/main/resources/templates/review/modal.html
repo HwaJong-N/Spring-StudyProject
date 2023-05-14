@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- Modal -->
+<div class="modal fade" id="review-edit-modal" tabindex="-1" th:fragment="modalForm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">댓글 수정</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <!-- 히든 인풋 -->
+          <input type="hidden" id="modal-id">
+          <input type="hidden" id="modal-item-id">
+
+          <!-- 닉네임 입력 -->
+          <div class="mb-3">
+            <label class="form-label">닉네임</label>
+            <input type="text" class="form-control form-control-sm" id="modal-nickname">
+          </div>
+
+          <!-- 별점 입력 -->
+          <div class="mb-3">
+            <label class="form-label">별점</label>
+            <select class="form-select form-select-sm" id="modal-star">
+              <option th:selected="modal-star == 1" value="1">★</option>
+              <option th:selected="modal-star == 2" value="2">★★</option>
+              <option th:selected="modal-star == 3" value="3">★★★</option>
+              <option th:selected="modal-star == 4" value="4">★★★★</option>
+              <option th:selected="modal-star == 5" value="5">★★★★★</option>
+            </select>
+          </div>
+
+          <!-- 리뷰 내용 입력 -->
+          <div class="mb-3">
+            <label class="form-label">댓글 내용</label>
+            <textarea type="text" class="form-control form-control-sm" rows="3" id="modal-comment"></textarea>
+          </div>
+
+          <!-- 전송 버튼 -->
+          <button type="button" class="btn btn-outline-primary btn-sm" id="modal-update">수정 완료</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</html>

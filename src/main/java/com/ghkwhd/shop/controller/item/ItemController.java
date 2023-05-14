@@ -4,6 +4,7 @@ import com.ghkwhd.shop.controller.itemDTO.ItemSaveDTO;
 import com.ghkwhd.shop.controller.itemDTO.ItemUpdateDTO;
 import com.ghkwhd.shop.domain.item.Item;
 import com.ghkwhd.shop.repository.item.JpaItemRepository;
+import com.ghkwhd.shop.service.review.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -27,6 +28,7 @@ import java.util.UUID;
 public class ItemController {
 
     private final JpaItemRepository itemRepository;
+    private final ReviewService reviewService;
 
     // 상품 목록 조회
     @GetMapping
@@ -42,6 +44,7 @@ public class ItemController {
         itemRepository.findById(itemId).ifPresent(
                 item -> model.addAttribute("item", item)
         );
+        model.addAttribute("reviews", reviewService.findAll(itemId));
         return "item/item";
     }
 
@@ -62,7 +65,6 @@ public class ItemController {
         Item savedItem = itemRepository.save(item);
 
         redirectAttributes.addAttribute("itemId", savedItem.getId());
-        redirectAttributes.addAttribute("saveStatus", true);
 
         return "redirect:/item/items/{itemId}";
     }
@@ -81,16 +83,13 @@ public class ItemController {
     // 상품 수정
     @PostMapping("/{itemId}/edit")
     public String editItem(@PathVariable Long itemId,
-                           @ModelAttribute("item") ItemUpdateDTO dto,
-                           RedirectAttributes redirectAttributes) {
+                           @ModelAttribute("item") ItemUpdateDTO dto) {
 
         // ItemUpdateDTO 에 있는 데이터들을 매개변수로 전달하고 이를 가진 Item 객체를 받는다
         Item updateItem = updateItem(dto.getItemName(), dto.getPrice(), dto.getSeller(),
                 dto.getContent(), dto.getThumbnailName(), dto.getThumbnailUUID());
 
         itemRepository.update(itemId, updateItem);
-
-        redirectAttributes.addAttribute("updateStatus", true);
 
         return "redirect:/item/items/{itemId}";
     }
@@ -150,7 +149,6 @@ public class ItemController {
         Item savedItem = itemRepository.save(item);
 
         redirectAttributes.addAttribute("itemId", savedItem.getId());
-        redirectAttributes.addAttribute("editThumbnailStatus", true);
 
         return "redirect:/item/items/{itemId}";
     }
