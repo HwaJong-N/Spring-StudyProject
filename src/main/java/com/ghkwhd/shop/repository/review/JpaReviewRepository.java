@@ -37,9 +37,16 @@ public class JpaReviewRepository implements ReviewRepository {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteByReviewId(Long id) {
         String jpql = "delete from Review r where r.id=:review_id";
         Query query = em.createQuery(jpql).setParameter("review_id", id);
+        query.executeUpdate();
+    }
+
+    @Override
+    public void deleteByItemId(Item item) {
+        String jpql = "delete from Review r where r.item=:item";
+        Query query = em.createQuery(jpql).setParameter("item", item);
         query.executeUpdate();
     }
 

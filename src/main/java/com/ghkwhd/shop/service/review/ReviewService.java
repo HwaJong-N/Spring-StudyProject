@@ -47,9 +47,15 @@ public class ReviewService {
         reviewRepository.update(id, review);
     }
 
-    public void delete(Long id) {
-        reviewRepository.delete(id);
+    public void deleteByReviewId(Long id) {
+        reviewRepository.deleteByReviewId(id);
     }
+
+    public void deleteByItemId(Long id) {
+        Item item = itemRepository.findById(id).orElse(null);
+        reviewRepository.deleteByItemId(item);
+    }
+
 
     public List<Review> findAll(Long itemId) {
         Item findItem = itemRepository.findById(itemId).orElse(null);

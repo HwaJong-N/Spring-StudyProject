@@ -38,7 +38,7 @@ public class ReviewController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public String deleteReview(@PathVariable Long reviewId) {
-        reviewService.delete(reviewId);
+        reviewService.deleteByReviewId(reviewId);
         return "ok";
     }
 }

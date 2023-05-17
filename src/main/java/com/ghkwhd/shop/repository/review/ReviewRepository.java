@@ -10,7 +10,8 @@ public interface ReviewRepository {
 
     Review save(Review review);
     void update(Long id, Review review);
-    void delete(Long id);
+    void deleteByReviewId(Long id);
+    void deleteByItemId(Item item);
     Optional<Review> findById(Long id);
     List<Review> findAll(Item item);
 }
