@@ -82,6 +82,7 @@ public class ItemController {
     // 상품 삭제하기
     @GetMapping("/{itemId}/delete")
     public String deleteItem(@PathVariable Long itemId) {
+        reviewService.deleteByItemId(itemId);
         itemService.deleteItem(itemId);
         return "redirect:/item/items";
     }
