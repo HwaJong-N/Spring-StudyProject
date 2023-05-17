@@ -1,4 +1,4 @@
-package com.ghkwhd.shop.controller.itemDTO;
+package com.ghkwhd.shop.service.itemDTO;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
