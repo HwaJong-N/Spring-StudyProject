@@ -8,6 +8,10 @@
     .container {
       max-width: 560px;
     }
+    .field-error {
+      border-color: #dc3545;
+      color: #dc3545;
+    }
   </style>
 </head>
 <body>
@@ -15,28 +19,36 @@
   <div class="py-5 text-center">
     <h2>상품 등록 폼</h2>
   </div>
+
   <h4 class="mb-3">상품 입력</h4>
-  <form action="item.html" th:action method="post" enctype="multipart/form-data">
+  <form action="item.html" th:action method="post" th:object="${item}" enctype="multipart/form-data">
     <div>
       <label for="itemName">상품명</label>
-      <input type="text" id="itemName" name="itemName" class="form-control" placeholder="상품명을 입력하세요">
+      <input type="text" id="itemName" th:field="*{itemName}"
+             th:errorclass="field-error" class="form-control" placeholder="상품명을 입력하세요">
+      <div class="field-error" th:errors="*{itemName}">상품명 오류</div>
     </div>
     <div>
       <label for="price">가격</label>
-      <input type="text" id="price" name="price" class="form-control"
-             placeholder="가격을 입력하세요">
+      <input type="text" id="price" th:field="*{price}"
+             th:errorclass="field-error" class="form-control" placeholder="가격을 입력하세요">
+      <div class="field-error" th:errors="*{price}">가격 오류</div>
     </div>
     <div>
       <label for="seller">판매자</label>
-      <input type="text" id="seller" name="seller" class="form-control" placeholder="판매자를 입력하세요">
+      <input type="text" id="seller" th:field="*{seller}"
+             th:errorclass="field-error" class="form-control" placeholder="판매자를 입력하세요">
+      <div class="field-error" th:errors="*{seller}">판매자 오류</div>
     </div>
     <div>
       <label for="price">상품설명</label>
-      <input type="text" id="content" name="content" class="form-control" placeholder="상품설명을 입력하세요">
+      <input type="text" id="content" th:field="*{content}"
+             th:errorclass="field-error" class="form-control" placeholder="상품설명을 입력하세요">
+      <div class="field-error" th:errors="*{content}">설명 오류</div>
     </div>
     <div>
       <label for="thumbnailName">썸네일</label>
-      <input type="file" id="thumbnailName" name="thumbnailName" class="form-control">
+      <input type="file" id="thumbnailName" th:field="*{thumbnailName}" class="form-control">
     </div>
     <hr class="my-4">
     <div class="row">
@@ -50,16 +62,10 @@
                 type="button">취소</button>
       </div>
     </div>
+
+    <script th:if="${#fields.hasErrors()}">alert("상품 등록이 실패하였습니다")</script>
+
   </form>
 </div>
-
-<script>
-  const itemCreate = document.querySelector("#itemCreate");
-  itemCreate.addEventListener("click", () => {
-    alert("상품이 등록되었습니다");
-  });
-</script>
-
-
 </body>
 </html>

@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -53,10 +55,16 @@ public class ItemController {
 
     // 상품 등록
     @PostMapping("/add")
-    public String addItem(@ModelAttribute("item") ItemSaveDTO dto,
+    public String addItem(@Validated @ModelAttribute("item") ItemSaveDTO dto, BindingResult bindingResult,
                           RedirectAttributes redirectAttributes) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            return "item/addForm";
+        }
+
         Item savedItem = itemService.save(dto);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("addSuccess", true);
         return "redirect:/item/items/{itemId}";
     }
 
@@ -73,8 +81,15 @@ public class ItemController {
     // 상품 수정
     @PostMapping("/{itemId}/edit")
     public String editItem(@PathVariable Long itemId,
-                           @ModelAttribute("item") ItemUpdateDTO dto) {
+                           @Validated @ModelAttribute("item") ItemUpdateDTO dto,
+                           BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            return "item/editForm";
+        }
+
         itemService.editItem(itemId, dto);
+        redirectAttributes.addAttribute("editSuccess", true);
         return "redirect:/item/items/{itemId}";
     }
 
@@ -109,8 +124,13 @@ public class ItemController {
     // 썸네일 수정
     @PostMapping("/{itemId}/edit/edit")
     public String editThumbnail(@PathVariable Long itemId,
-                                @ModelAttribute("item") ItemSaveDTO dto,
+                                @Validated @ModelAttribute("item") ItemSaveDTO dto,
+                                BindingResult bindingResult,
                                 RedirectAttributes redirectAttributes) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            return "item/editThumbnail";
+        }
 
         itemService.editThumbnail(itemId, dto);
         return "redirect:/item/items/{itemId}";

@@ -8,6 +8,10 @@
     .container {
       max-width: 750px;
     }
+    .field-error {
+      border-color: #dc3545;
+      color: #dc3545;
+    }
   </style>
 </head>
 <body>
@@ -18,7 +22,7 @@
     <h2>상품 수정</h2>
   </div>
 
-  <form action="item.html" th:action method="post">
+  <form action="item.html" th:action th:object="${item}" method="post">
     <!-- 상품 사진 -->
     <div class="row gx-10 gx-lg-15 align-items-center">
       <div class="col-md-6">
@@ -31,19 +35,23 @@
       <div class="col-md-6">
         <div>
           <label for="itemName">상품명</label>
-          <input type="text" id="itemName" name="itemName" class="form-control" th:value="${item.itemName}">
+          <input type="text" id="itemName" th:field="*{itemName}" th:errorclass="field-error" class="form-control" >
+          <div class="field-error" th:errors="*{itemName}">상품명 오류</div>
         </div>
         <div>
           <label for="price">가격</label>
-          <input type="text" id="price" name="price" class="form-control" th:value="${item.price}">
+          <input type="text" id="price" th:field="*{price}" th:errorclass="field-error" class="form-control" >
+          <div class="field-error" th:errors="*{price}">가격 오류</div>
         </div>
         <div>
           <label for="seller">판매자</label>
-          <input type="text" id="seller" name="seller" class="form-control" th:value="${item.seller}">
+          <input type="text" id="seller" th:field="*{seller}" th:errorclass="field-error" class="form-control">
+          <div class="field-error" th:errors="*{seller}">판매자 오류</div>
         </div>
         <div>
           <label for="content">상품설명</label>
-          <input type="text" id="content" name="content" class="form-control" th:value="${item.content}">
+          <input type="text" id="content" th:field="*{content}" th:errorclass="field-error" class="form-control">
+          <div class="field-error" th:errors="*{content}">설명 오류</div>
         </div>
         <div>
           <input type="hidden" id="thumbnailName" name="thumbnailName" th:value="${item.thumbnailName}">
@@ -58,21 +66,15 @@
         </div>
         <div class="col">
           <button class="w-100 btn btn-secondary btn-lg" type="button"
-                  th:onclick="|location.href='@{|/item/items/${item.id}|}'|">수정취소
+                  th:onclick="|location.href='@{|/item/items/*{id}|}'|">수정취소
           </button>
         </div>
       </div>
     </div>
+
+    <script th:if="${#fields.hasErrors()}">alert("상품 수정이 실패하였습니다")</script>
+
   </form>
 </div>
-
-
-<script>
-  const itemUpdate = document.querySelector("#itemUpdate");
-  itemUpdate.addEventListener("click", () => {
-    alert("상품이 수정되었습니다");
-  });
-</script>
-
 </body>
 </html>
