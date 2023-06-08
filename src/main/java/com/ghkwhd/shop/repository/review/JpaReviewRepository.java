@@ -62,4 +62,15 @@ public class JpaReviewRepository implements ReviewRepository {
         TypedQuery<Review> query = em.createQuery(jpql, Review.class);
         return query.setParameter("item", item).getResultList();
     }
+
+
+    @Override
+    public Double calAvgStar(Item item) {
+        List<Review> reviews = findAll(item);
+        if (reviews.isEmpty()) {
+            return 0.0;
+        }
+        Integer sum = reviews.stream().map(Review::getStar).reduce(Integer::sum).orElse(0);
+        return  (double) sum / (double) reviews.size();
+    }
 }

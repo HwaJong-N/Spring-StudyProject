@@ -26,9 +26,8 @@ class JpaReviewRepositoryTest {
     @Test
     void repositoryFindAllTest() {
 
-        // given
         Item item = new Item("test1", 12000, "seller1", "content1",
-                "", "defaultImage.jpg");
+                "", "defaultImage.jpg", 0.0);
         Item savedItem = itemRepository.save(item);
         Long itemId = savedItem.getId();
 
@@ -38,11 +37,33 @@ class JpaReviewRepositoryTest {
         Review review2 = new Review(item, 3, "nickname2", "comment2");
         reviewRepository.save(review2);
 
-        // when
+
+
         List<Review> reviews = reviewRepository.findAll(item);
 
-        // then
+
         assertThat(reviews).containsExactly(review1, review2);
+    }
+
+
+    @Test
+    void calAvgStarTest() {
+        Item item = new Item("test1", 12000, "seller1", "content1",
+                "", "defaultImage.jpg", 0.0);
+        Item savedItem = itemRepository.save(item);
+        Long itemId = savedItem.getId();
+
+        Review review1 = new Review(item, 5, "nickname1", "comment1");
+        reviewRepository.save(review1);
+
+        Review review2 = new Review(item, 4, "nickname2", "comment2");
+        reviewRepository.save(review2);
+
+
+        Double avg = reviewRepository.calAvgStar(item);
+
+
+        assertThat(avg).isEqualTo(4.5);
     }
 
 }

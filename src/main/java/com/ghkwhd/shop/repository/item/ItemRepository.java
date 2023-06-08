@@ -11,4 +11,6 @@ public interface ItemRepository {
     List<Item> findAll();
     void update(Long id, Item updateItem);
     void delete(Long id);
+
+    void updateAvgStar(Long id, Double avg);
 }

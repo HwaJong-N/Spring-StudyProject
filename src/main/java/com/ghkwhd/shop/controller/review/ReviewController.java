@@ -20,7 +20,9 @@ public class ReviewController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Review createReview(@RequestBody ReviewSaveDTO dto) {
-        return reviewService.save(dto);
+        Review savedReview = reviewService.save(dto);
+        reviewService.callUpdateAvgStar(savedReview.getItem().getId());
+        return savedReview;
     }
 
     
@@ -30,6 +32,7 @@ public class ReviewController {
     @ResponseStatus(HttpStatus.OK)
     public String updateReview(@RequestBody ReviewUpdateDTO dto) {
         reviewService.update(dto);
+        reviewService.callUpdateAvgStar(dto.getItemId());
         return "ok";
     }
 
@@ -38,7 +41,9 @@ public class ReviewController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public String deleteReview(@PathVariable Long reviewId) {
+        Long itemId = reviewService.findItemIdByReviewId(reviewId);
         reviewService.deleteByReviewId(reviewId);
+        reviewService.callUpdateAvgStar(itemId);
         return "ok";
     }
 }

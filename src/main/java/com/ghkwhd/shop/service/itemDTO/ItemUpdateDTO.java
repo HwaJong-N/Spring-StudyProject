@@ -26,4 +26,6 @@ public class ItemUpdateDTO {
 
     private String thumbnailName;
     private String thumbnailUUID;
+
+    private Double avgStar;
 }

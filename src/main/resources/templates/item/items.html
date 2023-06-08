@@ -29,6 +29,7 @@
                     <div class="text-center">
                         <h5 class="fw-bolder" th:text="${item.getItemName()}">상품명</h5>
                         <p th:text="|${item.getPrice()} 원|">가격</p>
+                        <p th:text="|${item.getAvgStar()}|">별졈평균</p>
                     </div>
                 </div>
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">

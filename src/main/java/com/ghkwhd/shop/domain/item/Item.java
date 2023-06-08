@@ -18,16 +18,18 @@ public class Item {
     private String thumbnailName;
     @Column(name = "thumbnail_UUID")
     private String thumbnailUUID;
+    private Double avgStar;
 
     public Item() {
     }
 
-    public Item(String itemName, Integer price, String seller, String content, String thumbnailName, String thumbnailUUID) {
+    public Item(String itemName, Integer price, String seller, String content, String thumbnailName, String thumbnailUUID, Double avgStar) {
         this.itemName = itemName;
         this.price = price;
         this.seller = seller;
         this.content = content;
         this.thumbnailName = thumbnailName;
         this.thumbnailUUID = thumbnailUUID;
+        this.avgStar = avgStar;
     }
 }

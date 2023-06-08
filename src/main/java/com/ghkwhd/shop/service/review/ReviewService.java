@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -60,5 +61,16 @@ public class ReviewService {
     public List<Review> findAll(Long itemId) {
         Item findItem = itemRepository.findById(itemId).orElse(null);
         return reviewRepository.findAll(findItem);
+    }
+
+    public Long findItemIdByReviewId(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow();
+        return review.getItem().getId();
+    }
+
+    public void callUpdateAvgStar(Long id) {
+        Item item = itemRepository.findById(id).orElseThrow();
+        Double avgStar = reviewRepository.calAvgStar(item);// 별점 평균값 계산하기
+        itemRepository.updateAvgStar(id, avgStar);
     }
 }

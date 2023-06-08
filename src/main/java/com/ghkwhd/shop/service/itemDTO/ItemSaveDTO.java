@@ -25,4 +25,6 @@ public class ItemSaveDTO {
 
     private MultipartFile thumbnailName;
 
+    private Double avgStar = 0.0;
+
 }

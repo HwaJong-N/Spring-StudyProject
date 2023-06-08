@@ -57,4 +57,10 @@ public class JpaItemRepository implements ItemRepository{
         query.executeUpdate();
     }
 
+    @Override
+    public void updateAvgStar(Long id, Double avg) {
+        Item findItem = em.find(Item.class, id);
+        findItem.setAvgStar(avg);
+    }
+
 }

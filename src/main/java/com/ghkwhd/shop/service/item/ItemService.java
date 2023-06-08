@@ -43,7 +43,7 @@ public class ItemService {
     // 상품 수정 및 삭제
     public void editItem(Long id, ItemUpdateDTO dto) {
         Item updateItem = stringToItem(dto.getItemName(), dto.getPrice(), dto.getSeller(),
-                dto.getContent(), dto.getThumbnailName(), dto.getThumbnailUUID());
+                dto.getContent(), dto.getThumbnailName(), dto.getThumbnailUUID(), dto.getAvgStar());
         itemRepository.update(id, updateItem);
     }
 
@@ -62,7 +62,7 @@ public class ItemService {
     public void deleteThumbnail(Long id) {
         Item item = deleteImg(id);
         Item updateItem = stringToItem(item.getItemName(), item.getPrice(), item.getSeller(),
-                item.getContent(), "", "defaultImage.jpg");
+                item.getContent(), "", "defaultImage.jpg", item.getAvgStar());
         itemRepository.update(id, updateItem);
     }
 
@@ -86,13 +86,14 @@ public class ItemService {
         item.setContent(dto.getContent());
         item.setThumbnailName(multipartFile.getOriginalFilename());
         item.setThumbnailUUID(checkEmpty(multipartFile));
+        item.setAvgStar(dto.getAvgStar());
 
         return item;
     }
 
 
     // 전달받은 String 을 이용해 Item 객체 생성 및 반환
-    private Item stringToItem(String name, int price, String seller, String content, String thName, String thUUID) {
+    private Item stringToItem(String name, int price, String seller, String content, String thName, String thUUID, Double avgStar) {
 
         Item item = new Item();
         item.setItemName(name);
@@ -101,6 +102,7 @@ public class ItemService {
         item.setContent(content);
         item.setThumbnailName(thName);
         item.setThumbnailUUID(thUUID);
+        item.setAvgStar(avgStar);
 
         return item;
     }
