@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -25,10 +26,14 @@ public class JpaUserRepository implements UserRepository{
     }
 
     @Override
-    public List<User> findById(String id) {
+    public Optional<User> findById(String id) {
         String jpql = "select u from User u where u.id=:id";
         TypedQuery<User> query = em.createQuery(jpql, User.class).setParameter("id", id);
-        return query.getResultList();
+        List<User> resultList = query.getResultList();
+        if (resultList.size() == 0) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(resultList.get(0));
     }
 
 }
