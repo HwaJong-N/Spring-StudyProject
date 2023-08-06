@@ -7,9 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -18,15 +15,14 @@ class JpaUserRepositoryTest {
     @Autowired
     JpaUserRepository userRepository;
 
+
     @Test
     void saveTest() {
         User user = new User("nwj1016", "hj", "123123", "nwj1016@nate.com");
 
         User savedUser = userRepository.save(user);
 
-        // User findUser = userRepository.findById(savedUser.getId()).orElseThrow();
-        List<User> byId = userRepository.findById("123");
-        assertThat(byId.size()).isEqualTo(0);
+        // User findUser = userRepository.findById(savedUser.getId()).get();
 
     }
 

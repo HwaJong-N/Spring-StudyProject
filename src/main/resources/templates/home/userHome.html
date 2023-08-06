@@ -4,9 +4,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="css/bootstrap.min.css" rel="stylesheet">
+    <title>SpringStudy</title>
 </head>
 <body>
-    <span th:text="${loginUser.getName()}">userName</span>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="#">SpringStudy</a>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/item/items">Items</a>
+                </li>
+            </ul>
+            <div>
+                <span style="font-size: large; font-weight: bold" th:text="|${loginUser.getName()} 님|">userName</span>
+                <button class="btn btn-outline-success" type="button" th:onclick="|location.href='@{/}'|">logout</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
 </body>
 </html>
