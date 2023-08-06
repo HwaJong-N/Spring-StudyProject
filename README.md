@@ -1,1 +1,1 @@
-# Spring-Project-ShoppingMall
+# Spring-StudyProject
