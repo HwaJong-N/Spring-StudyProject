@@ -42,7 +42,6 @@ public class UserController {
         return "home/home";
     }
 
-
     @GetMapping("/login")
     public String loadLogin() {
         return "/login/login";
@@ -58,6 +57,19 @@ public class UserController {
         }
         return "home/userHome";
     }
+
+    @GetMapping("/adminHome")
+    public String loadAdminHome() {
+        return "home/adminHome";
+    }
+
+
+    @GetMapping("/accessDenied")
+    public String loadAccessDenied() {
+        return "errorPage/accessDenied";
+    }
+
+
 
 
 }

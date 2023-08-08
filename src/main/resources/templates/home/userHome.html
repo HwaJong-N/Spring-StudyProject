@@ -17,6 +17,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/item/items">Items</a>
                 </li>
+                <li class="nav-item" th:if="${loginUser.getRole()} == 'ROLE_ADMIN'">    <!-- 관리자만 보이도록 설정 -->
+                    <a class="nav-link active" aria-current="page" href="/adminHome">AdminPage</a>
+                </li>
             </ul>
             <div>
                 <span style="font-size: large; font-weight: bold" th:text="|${loginUser.getName()} 님|">userName</span>

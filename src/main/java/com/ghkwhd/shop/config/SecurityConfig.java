@@ -48,8 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/", "/signUp", "/login").permitAll()     // 설정된 url 의 접근을 인증없이 허용한다
+                .antMatchers("/adminHome").access("hasRole('ROLE_ADMIN')")  // adminPage 의 요청은 ADMIN 만 가능
                 .anyRequest().authenticated();      // 모든 리소스가 인증을 해야만 접근이 허용된다
 
+        http.exceptionHandling().accessDeniedPage("/accessDenied");     // 권한이 없는 페이지 접속하면 해당 url 로 요청
 
     }
 

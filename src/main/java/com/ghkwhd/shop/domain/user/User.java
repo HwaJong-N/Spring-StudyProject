@@ -21,15 +21,17 @@ public class User {
     private String password;
     @NotBlank
     private String email;
+    private String role = "ROLE_USER";  // 회원가입 시 무조건 USER ( 관리자 계정은 따로 )
 
     public User() {
     }
 
-    public User(String id, String name, String password, String email) {
+    public User(String id, String name, String password, String email, String role) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
+        this.role = "ROLE_USER";
     }
 
 
