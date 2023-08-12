@@ -4,13 +4,12 @@ import com.ghkwhd.shop.domain.item.Item;
 import com.ghkwhd.shop.domain.review.Review;
 import com.ghkwhd.shop.repository.item.JpaItemRepository;
 import com.ghkwhd.shop.repository.review.JpaReviewRepository;
-import com.ghkwhd.shop.service.reviewDTO.ReviewUpdateDTO;
-import com.ghkwhd.shop.service.reviewDTO.ReviewSaveDTO;
+import com.ghkwhd.shop.dto.ReviewUpdateDTO;
+import com.ghkwhd.shop.dto.ReviewSaveDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

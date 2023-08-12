@@ -2,8 +2,8 @@ package com.ghkwhd.shop.controller.review;
 
 import com.ghkwhd.shop.domain.review.Review;
 import com.ghkwhd.shop.service.review.ReviewService;
-import com.ghkwhd.shop.service.reviewDTO.ReviewUpdateDTO;
-import com.ghkwhd.shop.service.reviewDTO.ReviewSaveDTO;
+import com.ghkwhd.shop.dto.ReviewUpdateDTO;
+import com.ghkwhd.shop.dto.ReviewSaveDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

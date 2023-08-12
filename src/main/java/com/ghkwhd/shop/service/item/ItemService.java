@@ -2,8 +2,8 @@ package com.ghkwhd.shop.service.item;
 
 import com.ghkwhd.shop.domain.item.Item;
 import com.ghkwhd.shop.repository.item.JpaItemRepository;
-import com.ghkwhd.shop.service.itemDTO.ItemSaveDTO;
-import com.ghkwhd.shop.service.itemDTO.ItemUpdateDTO;
+import com.ghkwhd.shop.dto.ItemSaveDTO;
+import com.ghkwhd.shop.dto.ItemUpdateDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

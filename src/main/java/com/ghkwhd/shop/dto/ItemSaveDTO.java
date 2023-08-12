@@ -1,21 +1,20 @@
-package com.ghkwhd.shop.service.itemDTO;
+package com.ghkwhd.shop.dto;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class ItemUpdateDTO {
-
-    private Long id;
+public class ItemSaveDTO {
 
     @NotBlank
     private String itemName;
 
     @NotNull
-    @Range(min=0, max=999999)
+    @Range(min=1000, max=999999)
     private Integer price;
 
     @NotBlank
@@ -24,8 +23,8 @@ public class ItemUpdateDTO {
     @NotBlank
     private String content;
 
-    private String thumbnailName;
-    private String thumbnailUUID;
+    private MultipartFile thumbnailName;
 
-    private Double avgStar;
+    private Double avgStar = 0.0;
+
 }

@@ -1,12 +1,10 @@
-package com.ghkwhd.shop.service.reviewDTO;
+package com.ghkwhd.shop.dto;
 
-import com.ghkwhd.shop.domain.item.Item;
 import lombok.Data;
 
 @Data
-public class ReviewUpdateDTO {
+public class ReviewSaveDTO {
 
-    private Long id;
     private Long itemId;
     private Integer star;
     private String nickname;

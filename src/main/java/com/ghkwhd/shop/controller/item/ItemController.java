@@ -1,8 +1,8 @@
 package com.ghkwhd.shop.controller.item;
 
 import com.ghkwhd.shop.service.item.ItemService;
-import com.ghkwhd.shop.service.itemDTO.ItemSaveDTO;
-import com.ghkwhd.shop.service.itemDTO.ItemUpdateDTO;
+import com.ghkwhd.shop.dto.ItemSaveDTO;
+import com.ghkwhd.shop.dto.ItemUpdateDTO;
 import com.ghkwhd.shop.domain.item.Item;
 import com.ghkwhd.shop.service.review.ReviewService;
 import lombok.RequiredArgsConstructor;
