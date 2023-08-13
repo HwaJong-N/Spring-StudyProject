@@ -6,7 +6,6 @@ import com.ghkwhd.shop.dto.ResponseDTO;
 import com.ghkwhd.shop.service.user.UserService;
 import com.ghkwhd.shop.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,7 +18,7 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-public class UserController {
+public class SignUpController {
 
     private final UserService userService;
 
@@ -45,10 +44,5 @@ public class UserController {
         }
         User savedUser = userService.save(userDTO);
         return new ResponseDTO<>(savedUser, HttpStatus.OK);
-    }
-
-    @GetMapping("/login")
-    public String loadLoginHome() {
-        return "home/loginHome";
     }
 }

@@ -24,7 +24,7 @@ signUpUser.addEventListener("click", () => {
             const res = JSON.parse(textData);   // ResponseDTO 를 JSON 형식으로 변환
             if (res.status === "OK") {
                 alert("회원가입이 완료되었습니다");
-                location.href = "/login"
+                location.href = "/loginHome"
             } else if (res.status === "CONFLICT") {
                 alert(res.data);    // 동일한 id 가 존재합니다
             }  else if (res.status === "BAD_REQUEST") {

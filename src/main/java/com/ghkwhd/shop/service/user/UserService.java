@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +30,10 @@ public class UserService {
 
     public boolean isExistId(String id) {
         return this.findById(id).isPresent();
+    }
+
+    public List<User> findAllUsers() {
+        return userRepository.findAllUsers();
     }
 
 }

@@ -35,4 +35,13 @@ public class JpaUserRepository implements UserRepository{
         }
         return Optional.ofNullable(userList.get(0));
     }
+
+    @Override
+    public List<User> findAllUsers() {
+        String jpql = "select u from User u";
+        TypedQuery<User> query = em.createQuery(jpql, User.class);
+        return query.getResultList();
+    }
+
+
 }
