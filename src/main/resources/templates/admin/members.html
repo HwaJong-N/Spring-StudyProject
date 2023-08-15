@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>회원 목록</h2>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>권한</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td><span th:text="${user.getId()}">ID</span></td>
+                <td><span th:text="${user.getName()}">이름</span></td>
+                <td><span th:text="${user.getEmail()}">이메일</span></td>
+                <td><span th:text="${user.getRole().toString()}">권한</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

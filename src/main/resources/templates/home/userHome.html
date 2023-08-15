@@ -1,0 +1,33 @@
+<!-- 로그인 후 나오는 화면 -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.min.css" rel="stylesheet">
+    <title>SpringStudy</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="#">SpringStudy</a>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/item/items">Items</a>
+                </li>
+                <!-- 권한에 따른 페이지 설정 -->
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">    <!-- 관리자만 보이도록 -->
+                    <a class="nav-link active" aria-current="page" href="/admin/members">Members</a>
+                </li>
+            </ul>
+            <form action="/logout" method="post">
+                <!-- @AuthenticationPrincipal 과 model 을 이용해서 전달하는 것과 동일 -->
+                <span style="font-size: large; font-weight: bold" sec:authentication="name"></span><span>님</span>
+                <button class="w-70 btn btn-secondary" type="submit">logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

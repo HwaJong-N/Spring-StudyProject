@@ -24,6 +24,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'  // Bean Validation 사용
 	implementation 'org.springframework.boot:spring-boot-starter-security'		// Spring Security
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'		// thymeleaf 에서 Spring Security 정보 사용
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
